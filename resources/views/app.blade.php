@@ -8,8 +8,6 @@
     @inertiaHead
   </head>
   <body>
-    <section class="px-8">
       @inertia
-    </section>
   </body>
 </html>

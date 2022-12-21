@@ -1,6 +1,6 @@
 <template>
-    <nav class="mt-6">
-        <ul class="list-disc">
+    <nav>
+        <ul class="flex space-x-4 list-inside">
             <li>
                 <!--<Link href="/" class="text-blue-500 hover:underline" :class="{'font-bold underline' : $page.component == 'Home'}">Home</Link>-->
                 <NavLink href="/" :active="$page.component === 'Home'">Home</NavLink>
@@ -37,6 +37,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 import NavLink from "./NavLink.vue";
 
 export default {
-    components: { NavLink, Link },
+    // components: { NavLink, Link },
+    components: { NavLink },
 };
 </script>

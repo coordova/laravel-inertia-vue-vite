@@ -1,5 +1,9 @@
 <template>
-    <h1 class="text-4xl">Users</h1>
+    <Layout>
+        <h1 class="text-3xl">Users</h1>
+    </Layout>
+
+    <!--<h1 class="text-4xl">Users</h1>
 
     <Nav />
 
@@ -9,15 +13,17 @@
         <Link href="/users" class="text-blue-500" preserve-scroll>
             Refresh
         </link>
-    </div>
+    </div>-->
 </template>
 
 <script>
-import Nav from "../Shared/Nav.vue";
+// import Nav from "../Shared/Nav.vue";
 import {Link} from "@inertiajs/inertia-vue3";
+import Layout from "../Shared/Layout.vue";
 
 export default {
-    components: { Nav, Link },
+    // components: { Nav, Link },
+    components: { Layout },
 
     props: {
         time: String
