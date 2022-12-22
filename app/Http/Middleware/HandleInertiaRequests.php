@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            // Aqui poner las vars que se necesitan de forma global para todos los componentes
             'auth' => [
                 'user' => [
                     'username' => 'JaneDoe'

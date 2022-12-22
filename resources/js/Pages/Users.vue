@@ -1,7 +1,12 @@
 <template>
-    <!--<Layout>-->
+    <Head title="Users" />
+    <!--<Head>
+        <title>Users</title>
+        <meta type="description" content="Users information" head-key="description">
+    </Head>-->
+    <Layout>
         <h1 class="text-3xl">Users</h1>
-    <!--</Layout>-->
+    </Layout>
 
     <div style="margin-top: 400px">
         <p>The current time is {{ time }}.</p>
@@ -16,15 +21,8 @@
     </div>
 </template>
 
-<script>
-import { Link } from "@inertiajs/inertia-vue3";
+<script setup>
 // import Layout from "../Shared/Layout.vue";
 
-export default {
-    // layout: Layout,
-    // components: { Link },    // definido globalmente en app.js
-    props: {
-        time: String
-    }
-}
+defineProps({time: String})
 </script>

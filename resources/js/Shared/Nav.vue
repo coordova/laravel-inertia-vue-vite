@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <ul class="flex space-x-4 list-inside">
+        <ul class="flex space-x-6">
             <li>
                 <!--<Link href="/" class="text-blue-500 hover:underline" :class="{'font-bold underline' : $page.component == 'Home'}">Home</Link>-->
                 <NavLink href="/" :active="$page.component === 'Home'">Home</NavLink>
