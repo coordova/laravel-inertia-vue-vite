@@ -13,7 +13,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
-            // registramos componentes de forma global
+            // para registrar componentes de forma global, verificar sus imports arriba en la cabecera
             // .component("Link", Link)
             .mount(el);
     },
