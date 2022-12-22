@@ -18,11 +18,11 @@
 
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
-import Layout from "../Shared/Layout.vue";
+// import Layout from "../Shared/Layout.vue";
 
 export default {
-    layout: Layout,
-    components: { Link },
+    // layout: Layout,
+    // components: { Link },    // definido globalmente en app.js
     props: {
         time: String
     }
