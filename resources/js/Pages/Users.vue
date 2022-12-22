@@ -1,10 +1,6 @@
 <template>
-    <Head title="Users" />
-    <!--<Head>
-        <title>Users</title>
-        <meta type="description" content="Users information" head-key="description">
-    </Head>-->
     <Layout>
+        <Head title="Users" />
         <h1 class="text-3xl">Users</h1>
     </Layout>
 
@@ -22,7 +18,5 @@
 </template>
 
 <script setup>
-// import Layout from "../Shared/Layout.vue";
-
 defineProps({time: String})
 </script>
