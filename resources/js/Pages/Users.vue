@@ -2,9 +2,13 @@
     <Layout>
         <Head title="Users" />
         <h1 class="text-3xl">Users</h1>
+
+        <ul>
+            <li v-for="user in users" :key="user.id" v-text="user.name"></li>
+        </ul>
     </Layout>
 
-    <div style="margin-top: 400px">
+    <!--<div style="margin-top: 400px">
         <p>The current time is {{ time }}.</p>
 
         <Link
@@ -14,9 +18,9 @@
         >
             Refresh
         </Link>
-    </div>
+    </div>-->
 </template>
 
 <script setup>
-defineProps({time: String})
+defineProps({ users: Array })
 </script>
