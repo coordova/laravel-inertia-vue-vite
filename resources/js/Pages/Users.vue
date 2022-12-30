@@ -1,7 +1,10 @@
 <template>
     <Layout>
         <Head title="Users" />
-        <h1 class="text-3xl">Users</h1>
+        <div class="flex justify-between mb-6">
+            <h1 class="text-3xl">Users</h1>
+            <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg">
+        </div>
 
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -53,6 +56,23 @@
 
 <script setup>
 import Pagination from "@/Shared/Pagination.vue";
+import {ref, watch} from "vue";
+import {Inertia} from "@inertiajs/inertia";
 
-defineProps({ users: Object })
+let props = defineProps({
+    users: Object,
+    filters: Object
+});
+
+// persistencia de la var search de la uri, del servidor al cliente, este valor se ha definido en la ruta 'users' en routes de web.php
+let search = ref(props.filters.search);
+
+// Dale un vistazo al valor de la variable 'search' e imprime en consola si hay un cambio
+watch(search, value => {
+    // console.log('changed ' + value);
+    Inertia.get('/users', { search: value }, {
+        preserveState: true,
+        replace: true   // para evitar que cada letra q se escribe en 'search' field no sea una llamada XHR ajax
+    })
+});
 </script>

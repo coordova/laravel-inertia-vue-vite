@@ -30,10 +30,18 @@ Route::get('/users', function () {
     return Inertia::render('Users', [
         // 'time' => now()->toTimeString()
         // 'users' => \App\Models\User::paginate(10)
-        'users' => \App\Models\User::paginate(10)->through(fn($user) => [
-            'name' => $user->name,
-            'id' => $user->id
-        ])
+        'users' => \App\Models\User::query()
+            ->when(Request::input('search'), function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString()
+            ->through(fn($user) => [
+                'name' => $user->name,
+                'id' => $user->id
+            ]),
+
+        'filters' => Request::only(['search'])
     ]);
 });
 
