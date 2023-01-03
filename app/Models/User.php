@@ -41,4 +41,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Para encriptar el password, Lo hacemos como parte de un mutator,
+     * lo podiamos hacer en el controlador (o en las rutas web.php), pero lo hacemos aqui.
+     * @param $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

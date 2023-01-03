@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,7 +28,7 @@ Route::get('/', function () {
 
 Route::get('/users', function () {
 //    sleep(3);
-    return Inertia::render('Users', [
+    return Inertia::render('Users/Index', [
         // 'time' => now()->toTimeString()
         // 'users' => \App\Models\User::paginate(10)
         'users' => \App\Models\User::query()
@@ -43,6 +44,23 @@ Route::get('/users', function () {
 
         'filters' => Request::only(['search'])
     ]);
+});
+// show create user form
+Route::get('/users/create', function () {
+    return Inertia::render('Users/Create');
+});
+// post the create user form
+Route::post('/users', function () {
+    // validate the request
+    $attributes = Request::validate([
+        'name' => 'required',
+        'email' => ['required', 'email'],
+        'password' => 'required',
+    ]);
+    // create the user
+    User::create($attributes);
+    // redirect
+    return redirect('/users');
 });
 
 Route::get('/settings', function () {
