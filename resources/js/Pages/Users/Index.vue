@@ -61,6 +61,7 @@
 import Pagination from "@/Shared/Pagination.vue";
 import {ref, watch} from "vue";
 import {Inertia} from "@inertiajs/inertia";
+import {debounce} from "lodash";
 
 let props = defineProps({
     users: Object,
@@ -71,11 +72,18 @@ let props = defineProps({
 let search = ref(props.filters.search);
 
 // Dale un vistazo al valor de la variable 'search' e imprime en consola si hay un cambio
-watch(search, value => {
+/*watch(search, value => {
     // console.log('changed ' + value);
     Inertia.get('/users', { search: value }, {
         preserveState: true,
         replace: true   // para evitar que cada letra q se escribe en 'search' field no sea una llamada XHR ajax
     })
-});
+});*/
+
+// usando throttling/debounce de lodash para que hacer 1 solo request dependiendo si usamos throttling o debounce en un tiempo de milisegundos.
+watch(search, debounce(function (value) {
+    console.log('triggered');
+
+    Inertia.get('/users', { search: value }, {preserveState: true, replace: true});
+}, 300));
 </script>
