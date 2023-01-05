@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,16 +48,26 @@ Route::middleware('auth')->group(function () {
                 ->withQueryString()
                 ->through(fn($user) => [
                     'name' => $user->name,
-                    'id' => $user->id
+                    'id' => $user->id,
+                    // para definir reglas por cada registro hacerlo de esta manera, ej: can
+                    'can' => [
+                        'edit' => Auth::user()->can('edit', $user)
+                    ]
                 ]),
 
-            'filters' => Request::only(['search'])
+            'filters' => Request::only(['search']),
+            'can' => [
+                'createUser' => Auth::user()->can('create', User::class) // Auth::user()->email === 'gretta@email.com'
+            ]
         ]);
     });
-    // show create user form
+
+    // show create user form - con Authorization mediante middleware
     Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
-    });
+    // })->middleware('can:create,App\Models\User'); // version antigua para definir authorization
+    })->can('create', 'App\Models\User');   // Authorization con el metodo 'can' en versiones mas modernas de laravel
+
     // post the create user form
     Route::post('/users', function () {
         // validate the request
