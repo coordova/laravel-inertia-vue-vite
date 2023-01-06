@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Home');
     });
 
+    // El Index de users, muestra la lista de usuarios con su paginacion
     Route::get('/users', function () {
     //    sleep(3);
         return Inertia::render('Users/Index', [
@@ -82,6 +83,21 @@ Route::middleware('auth')->group(function () {
         return redirect('/users');
     });
 
+    // show edit user form
+    Route::get('/users/{id}/edit', function (/*User $user*/ $id) {
+        $user = User::findOrFail($id);
+        // dd($user);
+        return Inertia::render('Users/Edit', [
+            'user' => $user->only('name', 'email', 'password'),
+        ]);
+    })->can('edit', 'App\Models\User');
+
+    Route::patch('/users/{id}', function (User $user) {
+        dd($user);
+    });
+
+
+    // Dummy settings page
     Route::get('/settings', function () {
         return Inertia::render('Settings');
     });
