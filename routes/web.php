@@ -35,7 +35,9 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Home');
     });
 
-    // El Index de users, muestra la lista de usuarios con su paginacion
+    /*---------------------------------------------------------------------*/
+    // INDEX - El Index de users, muestra la lista de usuarios con su paginacion
+    /*---------------------------------------------------------------------*/
     Route::get('/users', function () {
     //    sleep(3);
         return Inertia::render('Users/Index', [
@@ -49,6 +51,7 @@ Route::middleware('auth')->group(function () {
                 ->withQueryString()
                 ->through(fn($user) => [
                     'name' => $user->name,
+                    'email' => $user->email,
                     'id' => $user->id,
                     // para definir reglas por cada registro hacerlo de esta manera, ej: can
                     'can' => [
@@ -63,7 +66,9 @@ Route::middleware('auth')->group(function () {
         ]);
     });
 
-    // show create user form - con Authorization mediante middleware
+    /*---------------------------------------------------------------------*/
+    // CREATE - show create user form - con Authorization mediante middleware
+    /*---------------------------------------------------------------------*/
     Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
     // })->middleware('can:create,App\Models\User'); // version antigua para definir authorization
@@ -83,18 +88,40 @@ Route::middleware('auth')->group(function () {
         return redirect('/users');
     });
 
-    // show edit user form
-    Route::get('/users/{id}/edit', function (/*User $user*/ $id) {
-        $user = User::findOrFail($id);
+    /*---------------------------------------------------------------------*/
+    // EDIT - show edit user form
+    /*---------------------------------------------------------------------*/
+    Route::get('/users/{user}/edit', function (User $user /*$id*/) {
+        // $user = User::findOrFail($id);
         // dd($user);
         return Inertia::render('Users/Edit', [
-            'user' => $user->only('name', 'email', 'password'),
+            'user' => $user->only('id', 'name', 'email'/*, 'password'*/),
+            // 'user' => $user
         ]);
     })->can('edit', 'App\Models\User');
 
-    Route::patch('/users/{id}', function (User $user) {
-        dd($user);
+    /*---------------------------------------------------------------------*/
+    // UPDATE - Put / Post the User edited form
+    /*---------------------------------------------------------------------*/
+    Route::put('/users/{user}', function (User $user) {
+        // dd($user);
+        // validate the request
+        $attributes = Request::validate([
+            'name' => 'required',
+            'email' => ['required', 'email'],
+            // 'password' => 'required',
+        ]);
+        // update user
+        $user->update(Request::only('name', 'email'));
+
+        if (Request::get('password')) {
+            $user->update(['password' => Request::get('password')]);
+        }
+
+        return redirect('/users');
     });
+
+    /*---------------------------------------------------------------------*/
 
 
     // Dummy settings page

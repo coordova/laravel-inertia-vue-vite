@@ -40,9 +40,10 @@ let props = defineProps({
 
 
 
-console.log(props.id);
+console.log(props.user.name);
 
 let form = useForm({
+    id: props.user.id,
     name: props.user.name,
     email: props.user.email,
     password: props.user.password
@@ -51,7 +52,7 @@ let form = useForm({
 // Metodo para guardar el registro usando las bondades de 'useForm' de Inertia
 let submit = () => {
     // console.log(`Formulario enviado: ${form.name} ${form.email}`);
-    form.patch('/users/{form}');
+    form.put(`/users/${props.user.id}` );
 };
 
 /*export default {
