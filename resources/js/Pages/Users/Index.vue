@@ -29,7 +29,7 @@
                                         <div class="flex items-center">
                                             <div>
                                                 <div class="text-sm text-gray-900">
-                                                    {{ user.email }}
+                                                    <a :href="`mailto:${user.email}`">{{ user.email }}</a>
                                                 </div>
                                             </div>
                                         </div>
