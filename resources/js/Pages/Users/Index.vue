@@ -37,6 +37,11 @@
                                     <td v-if="user.can.edit" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <Link :href="`/users/${user.id}/edit`" class="text-indigo-600 hover:text-indigo-900">Edit</Link>
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-lg font-medium">
+                                        <!--<Link :href="`/users/${user.id}/delete`" method="post" class="text-red-500 hover:text-red-900" title="Delete" :data="{ foo: `${user.name}` }">x</Link>-->
+                                        <Link :href="`/users/${user.id}/delete`" method="delete" as="button" type="button" :onBefore="() => window.confirm('Eliminar?')" class="text-red-500 hover:text-red-900" title="Delete">x</Link>
+                                        <button @click="remove(user.id)" class="text-blue-500 hover:text-blue-900" >x</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,6 +73,7 @@
 
 <script setup>
 import Pagination from "@/Shared/Pagination.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 import {ref, watch} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 import {debounce} from "lodash";
@@ -96,4 +102,13 @@ watch(search, debounce(function (value) {
 
     Inertia.get('/users', { search: value }, {preserveState: true, replace: true});
 }, 300));
+
+
+let remove = (id) => {
+    // alert('mmmm')
+    if (confirm('Are you sure?')) {
+        console.log(id);
+        Inertia.visit(`/users/${id}/delete`, {method: 'post'})
+    }
+}
 </script>
