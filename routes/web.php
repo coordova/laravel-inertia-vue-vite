@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UsersController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,7 @@ Route::middleware('auth')->group(function () {
     /*---------------------------------------------------------------------*/
     // INDEX - El Index de users, muestra la lista de usuarios con su paginacion
     /*---------------------------------------------------------------------*/
-    Route::get('/users', function () {
+    /*Route::get('/users', function () {
     //    sleep(3);
         return Inertia::render('Users/Index', [
             // 'time' => now()->toTimeString()
@@ -64,17 +65,17 @@ Route::middleware('auth')->group(function () {
                 'createUser' => Auth::user()->can('create', User::class) // Auth::user()->email === 'gretta@email.com'
             ]
         ]);
-    });
+    });*/
 
     /*---------------------------------------------------------------------*/
     // CREATE - show create user form - con Authorization mediante middleware
     /*---------------------------------------------------------------------*/
-    Route::get('/users/create', function () {
+    /*Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
     // })->middleware('can:create,App\Models\User'); // version antigua para definir authorization
     })->can('create', 'App\Models\User');   // Authorization con el metodo 'can' en versiones mas modernas de laravel
 
-    // post the create user form
+    // STORE - post the create user form
     Route::post('/users', function () {
         // validate the request
         $attributes = Request::validate([
@@ -86,24 +87,24 @@ Route::middleware('auth')->group(function () {
         User::create($attributes);
         // redirect
         return redirect('/users');
-    });
+    });*/
 
     /*---------------------------------------------------------------------*/
     // EDIT - show edit user form
     /*---------------------------------------------------------------------*/
-    Route::get('/users/{user}/edit', function (User $user /*$id*/) {
+    /*Route::get('/users/{user}/edit', function (User $user) {
         // $user = User::findOrFail($id);
         // dd($user);
         return Inertia::render('Users/Edit', [
-            'user' => $user->only('id', 'name', 'email'/*, 'password'*/),
+            'user' => $user->only('id', 'name', 'email'),
             // 'user' => $user
         ]);
-    })->can('edit', 'App\Models\User');
+    })->can('edit', 'App\Models\User');*/
 
     /*---------------------------------------------------------------------*/
     // UPDATE - Put / Post the User edited form
     /*---------------------------------------------------------------------*/
-    Route::put('/users/{user}', function (User $user) {
+    /*Route::put('/users/{user}', function (User $user) {
         // dd($user);
         // validate the request
         $attributes = Request::validate([
@@ -119,17 +120,17 @@ Route::middleware('auth')->group(function () {
         }
 
         return redirect('/users');
-    });
+    });*/
 
     /*---------------------------------------------------------------------*/
     // Delete -
     /*---------------------------------------------------------------------*/
-    Route::post('/users/{user}/delete', function (User $user) {
+    /*Route::post('/users/{user}/delete', function (User $user) {
         $user->delete();
 
         // dd(Request::post());
         // dd($user);
-    });
+    });*/
     /*---------------------------------------------------------------------*/
 
 
@@ -142,4 +143,16 @@ Route::middleware('auth')->group(function () {
         dd(request('foo'));
         // return Inertia::render('Settings');
     });*/
+
+    /*------------------------------------------------------------------------*/
+    // Rutas usando el controlador UserController
+    /*------------------------------------------------------------------------*/
+    Route::get('/users', [UsersController::class, 'index']);
+    Route::get('/users/{user}', [UsersController::class, 'show']);
+    Route::get('/users/create', [UsersController::class, 'create']);
+    Route::post('/users', [UsersController::class, 'store']);
+    Route::get('/users/{user}/edit', [UsersController::class, 'edit']);
+    Route::put('/users/{user}', [UsersController::class, 'update']);
+    Route::post('/users/{user}/delete', [UsersController::class, 'delete']);
+    /*------------------------------------------------------------------------*/
 });
