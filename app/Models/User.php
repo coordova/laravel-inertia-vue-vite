@@ -25,6 +25,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for serialization.
+     * LO QUE ESTA HIDDEN, ESTA OCULTO EN LA SERIALIZACION, CUANDO SE PASA EL MODELO USUARIO AL FRONTEND
      *
      * @var array<int, string>
      */
@@ -32,6 +33,13 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Aqui los Atributos que quiero que sean visibles en la serializacion del frontend,
+     * cuando pasamos el modelo Usuario a un componente Vue.
+     * @var string[]
+     */
+    protected $visible = ['*']; // ['id', 'email'] // * es el equivalente a override toArray return [] en el UsersController
 
     /**
      * The attributes that should be cast.
@@ -53,8 +61,9 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function toArray()
+    // Serializacion Opcion 1
+    /*public function toArray()
     {
         return [];
-    }
+    }*/
 }

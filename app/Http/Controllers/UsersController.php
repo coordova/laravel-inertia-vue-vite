@@ -33,6 +33,7 @@ class UsersController extends Controller
     public function show(User $user)
     {
         return Inertia::render('Users/Show', [
+            // 'user' => $user->only(['id', 'name', 'email', 'created_at'])     // Serializacion Opcion 1
             'user' => $user->only(['id', 'name', 'email', 'created_at'])
         ]);
     }
