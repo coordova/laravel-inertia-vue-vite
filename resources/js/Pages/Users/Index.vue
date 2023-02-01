@@ -51,7 +51,7 @@
         </div>
 
         <!--Paginator-->
-        <Pagination :links="users.links" class="mt-6" />
+        <Pagination :links="users.meta.links" class="mt-6" />
 
         <!--<ul>
             <li v-for="user in users" :key="user.id" v-text="user.name"></li>

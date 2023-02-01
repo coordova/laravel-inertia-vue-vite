@@ -39,7 +39,7 @@ class User extends Authenticatable
      * cuando pasamos el modelo Usuario a un componente Vue.
      * @var string[]
      */
-    protected $visible = ['*']; // ['id', 'email'] // * es el equivalente a override toArray return [] en el UsersController
+    // protected $visible = ['*']; // ['id', 'email'] // * es el equivalente a override toArray return [] en el UsersController
 
     /**
      * The attributes that should be cast.

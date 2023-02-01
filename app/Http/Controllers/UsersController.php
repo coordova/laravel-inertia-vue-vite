@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,17 +12,19 @@ class UsersController extends Controller
 {
     public function index()
     {
+        // return UserResource::collection( User::all() );
+
         return Inertia::render('Users/Index', [
-            'users' => User::query()
+            'users' => UserResource::collection( User::query()
                 ->paginate(50)
-                ->withQueryString()
-                ->through(fn($user) => [
+                ->withQueryString() ),
+                /*->through(fn($user) => [
                     'id' => $user->id,
                     'name' => $user->name,
                     'can' => [
                         'edit' => Auth::user()->can('edit', $user)
                     ]
-                ]),
+                ]),*/
 
             'filters' => Request::only(['search']),
             'can' => [
@@ -34,7 +37,8 @@ class UsersController extends Controller
     {
         return Inertia::render('Users/Show', [
             // 'user' => $user->only(['id', 'name', 'email', 'created_at'])     // Serializacion Opcion 1
-            'user' => $user->only(['id', 'name', 'email', 'created_at'])
+            // 'user' => $user->only(['id', 'name', 'email', 'created_at'])
+            'user' => UserResource::make($user)
         ]);
     }
 
