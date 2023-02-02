@@ -1,4 +1,5 @@
-import hljs from "highlight.js/lib/common";
+// import hljs from "highlight.js/lib/common"; // generico para todos los lenguajes
+import hljs from "highlight.js/lib/core";   // para lenguajes especificos, como hacemos aqui, js, php, xml, yaml
 import javascript from "highlight.js/lib/languages/javascript";
 import php from "highlight.js/lib/languages/php";
 import html from "highlight.js/lib/languages/xml";
