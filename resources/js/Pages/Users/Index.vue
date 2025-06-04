@@ -98,7 +98,7 @@ let search = ref(props.filters.search);
 
 // usando throttling/debounce de lodash para que hacer 1 solo request dependiendo si usamos throttling o debounce en un tiempo de milisegundos.
 watch(search, debounce(function (value) {
-    console.log('triggered');
+    console.log('triggered : ' + value);
 
     Inertia.get('/users', { search: value }, {preserveState: true, replace: true});
 }, 300));
