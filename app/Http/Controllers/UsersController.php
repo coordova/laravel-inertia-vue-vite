@@ -12,23 +12,20 @@ class UsersController extends Controller
 {
     public function index()
     {
-        // return UserResource::collection( User::all() );
         return Inertia::render('Users/Index', [
-            'users' => \App\Models\User::query()
+            'users' => UserResource::collection( User::query()
                 ->when(Request::input('search'), function ($query, $search) {
-                    $query->where('name', 'like', "%{$search}%");
+                    $query->where('name', 'like', "%{search}%");
                 })
                 ->paginate(10)
                 ->withQueryString()
-                ->through(fn($user) => [
-                    'name' => $user->name,
-                    'email' => $user->email,
+                /*->through(fn($user) => [
                     'id' => $user->id,
-                    // para definir reglas por cada registro hacerlo de esta manera, ej: can
+                    'name' => $user->name,
                     'can' => [
                         'edit' => Auth::user()->can('edit', $user)
                     ]
-                ]),
+                ])*/),
 
             'filters' => Request::only(['search']),
             'can' => [
